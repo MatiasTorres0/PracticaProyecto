@@ -10,7 +10,8 @@
 		<title>Striped by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="assets/css/main.css" />
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'core/'%}/css/main.css" />
 	</head>
 	<body class="is-preload">
 
@@ -50,7 +51,7 @@
 								</ul>
 							</div>
 							<a href="#" class="image featured" title="-">
-								<img src="images/pic01.jpg" alt="" />
+								<img src="{% static 'core/'%}img/pic01.jpg" alt="" />
 							  </a>
 							  
 							<p>
@@ -80,7 +81,7 @@
 									<li><a href="#" class="icon brands fa-facebook-f">128</a></li>
 								</ul>
 							</div>
-							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="Image of a cat" /></a>
+							<a href="#" class="image featured"><img src="{% static 'core/'%}img/pic02.jpg" alt="Image of a cat" /></a>
 
 							<p>
 								Quisque vel sapien sit amet tellus elementum ultricies. Nunc vel orci turpis. Donec id malesuada metus.
