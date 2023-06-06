@@ -1,47 +1,33 @@
 from django.contrib import admin
-from .models import Medico, Region, Provincia, Comuna, Paciente, FamiliarPaciente, Especialidad, PacienteHasFamiliarPaciente, MedicoHasEspecialidad, Institucion, InstitucionHasMedicoHasEspecialidad
+from .models import (
+    Medico, Region, Provincia, Comuna, Paciente, FamiliarPaciente,
+    Especialidad, Medico_has_Especialidad, Institucion, PreguntasInstrumento,
+    Paciente_has_Preguntas, respuestas_has_medico, Medico_has_Paciente,
+    Usuario, TipoUsuario, TipoInstrumento, Paciente_ProfesionalSalud,
+    Paciente_has_Paciente_ProfesionalSalud, Medico_has_Paciente_ProfesionalSalud,
+    PacienteHasFamiliarPaciente, MedicoHasEspecialidad,
+    InstitucionHasMedicoHasEspecialidad,
+)
 
-class MedicoAdmin(admin.ModelAdmin):
-    pass
-
-class RegionAdmin(admin.ModelAdmin):
-    pass
-
-class ProvinciaAdmin(admin.ModelAdmin):
-    pass
-
-class ComunaAdmin(admin.ModelAdmin):
-    pass
-
-class PacienteAdmin(admin.ModelAdmin):
-    pass
-
-class FamiliarPacienteAdmin(admin.ModelAdmin):
-    pass
-
-class EspecialidadAdmin(admin.ModelAdmin):
-    pass
-
-class PacienteHasFamiliarPacienteAdmin(admin.ModelAdmin):
-    pass
-
-class MedicoHasEspecialidadAdmin(admin.ModelAdmin):
-    pass
-
-class InstitucionAdmin(admin.ModelAdmin):
-    pass
-
-class InstitucionHasMedicoHasEspecialidadAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Medico, MedicoAdmin)
-admin.site.register(Region, RegionAdmin)
-admin.site.register(Provincia, ProvinciaAdmin)
-admin.site.register(Comuna, ComunaAdmin)
-admin.site.register(Paciente, PacienteAdmin)
-admin.site.register(FamiliarPaciente, FamiliarPacienteAdmin)
-admin.site.register(Especialidad, EspecialidadAdmin)
-admin.site.register(PacienteHasFamiliarPaciente, PacienteHasFamiliarPacienteAdmin)
-admin.site.register(MedicoHasEspecialidad, MedicoHasEspecialidadAdmin)
-admin.site.register(Institucion, InstitucionAdmin)
-admin.site.register(InstitucionHasMedicoHasEspecialidad, InstitucionHasMedicoHasEspecialidadAdmin)
+admin.site.register(Medico)
+admin.site.register(Region)
+admin.site.register(Provincia)
+admin.site.register(Comuna)
+admin.site.register(Paciente)
+admin.site.register(FamiliarPaciente)
+admin.site.register(Especialidad)
+admin.site.register(Medico_has_Especialidad)
+admin.site.register(Institucion)
+admin.site.register(PreguntasInstrumento)
+admin.site.register(Paciente_has_Preguntas)
+admin.site.register(respuestas_has_medico)
+admin.site.register(Medico_has_Paciente)
+admin.site.register(Usuario)
+admin.site.register(TipoUsuario)
+admin.site.register(TipoInstrumento)
+admin.site.register(Paciente_ProfesionalSalud)
+admin.site.register(Paciente_has_Paciente_ProfesionalSalud)
+admin.site.register(Medico_has_Paciente_ProfesionalSalud)
+admin.site.register(PacienteHasFamiliarPaciente)
+admin.site.register(MedicoHasEspecialidad)
+admin.site.register(InstitucionHasMedicoHasEspecialidad)
