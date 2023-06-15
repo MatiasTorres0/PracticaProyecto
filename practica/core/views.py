@@ -5,3 +5,6 @@ def home(request):
 
 def formulario(request):
     return render(request, 'core/formulario.html')
+
+def prueba(request):
+    return render(request, 'core/prueba.html')

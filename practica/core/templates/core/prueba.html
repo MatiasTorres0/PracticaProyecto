@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>Formulario de Búsqueda</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Formulario de Búsqueda</h1>
+    <form id="form-busqueda" class="form-inline">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese un nombre">
+      </div>
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <div id="form-persona" style="display: none;">
+      <h2>Formulario de Persona</h2>
+      <!-- Agrega aquí los campos del formulario de persona -->
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Captura el evento de envío del formulario de búsqueda
+      $('#form-busqueda').submit(function(event) {
+        event.preventDefault(); // Evita que se envíe el formulario
+
+        // Obtiene el nombre ingresado por el usuario
+        var nombre = $('#nombre').val();
+
+        // Oculta el formulario de búsqueda
+        $('#form-busqueda').hide();
+
+        // Muestra el formulario de persona
+        $('#form-persona').show();
+
+        // Puedes usar el nombre para realizar alguna acción en el formulario de persona
+        console.log('Nombre seleccionado:', nombre);
+      });
+    });
+  </script>
+</body>
+
+</html>
