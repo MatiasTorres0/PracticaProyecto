@@ -54,110 +54,97 @@
 							<div class="container">
 								<h1>Formulario</h1>
 						
-								<form action="procesar_formulario.php" method="POST">
+								<form id="form-busqueda" class="form-inline">
 									<div class="form-group">
+									  <label for="nombre">Nombre:</label>
+									  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese un nombre">
+									</div>
+									<button type="submit" class="btn btn-primary">Buscar</button>
+								  </form>
+							  
+								  <div id="form-persona" style="display: none;">
+									<h2>Formulario de Persona</h2>
+									<form action="procesar_formulario.php" method="POST">
+									  <div class="form-group">
 										<label>Viudez menor de un año:</label>
 										<select class="form-control" name="viudez">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Vivir solo:</label>
 										<select class="form-control" name="vivir_solo">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Cambio de casa en el último año:</label>
 										<select class="form-control" name="cambio_casa">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>No estar satisfecho con su actual lugar de residencia:</label>
 										<select class="form-control" name="no_satisfecho_residencia">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Mala percepción de su salud, comparado con otras personas de la misma edad:</label>
 										<select class="form-control" name="percepcion_salud">
-											<option value="1">Muy mala salud</option>
-											<option value="2">Mala salud</option>
-											<option value="3">Normal</option>
-											<option value="4">Buena salud</option>
-											<option value="5">Muy buena salud</option>
+										  <option value="1">Muy mala salud</option>
+										  <option value="2">Mala salud</option>
+										  <option value="3">Normal</option>
+										  <option value="4">Buena salud</option>
+										  <option value="5">Muy buena salud</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Ingesta diaria de 5 o más fármacos:</label>
 										<select class="form-control" name="ingesta_farmacos">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Limitación para realizar sus actividades por problemas de salud:</label>
 										<select class="form-control" name="limitacion_actividades">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Problema(s) de salud que le impida salir de la casa:</label>
 										<textarea class="form-control" name="problemas_salud" rows="4" cols="50"></textarea>
-									</div>
-						
-									<div class="form-group">
+									  </div>
+							  
+									  <div class="form-group">
 										<label>Haber estado hospitalizado en el último año:</label>
 										<select class="form-control" name="hospitalizacion">
-											<option value="si">Si</option>
-											<option value="no">No</option>
+										  <option value="si">Si</option>
+										  <option value="no">No</option>
 										</select>
-									</div>
-						
-									<input type="hidden" name="timestamp" value="<?php echo date('Y-m-d H:i:s'); ?>">
-						
-									<button type="submit" class="btn btn-primary">Enviar</button>
-								</form>
-							</div>
+									  </div>
+							  
+									  <input type="hidden" name="timestamp" value="<?php echo date('Y-m-d H:i:s'); ?>">
+							  
+									  <button type="submit" class="btn btn-primary">Enviar</button>
+									</form>
 						</article>
 
 					<!-- Post -->
-						<article class="box post post-excerpt">
-							<header>
-								<h2><a href="#">Lorem ipsum dolor sit amet</a></h2>
-								<p>Feugiat interdum sed commodo ipsum consequat dolor nullam metus</p>
-							</header>
-							<div class="info">
-								<span class="date"><span class="month">Jul<span>y</span></span> <span class="day">8</span><span class="year">, 2014</span></span>
-								<ul class="stats">
-									<li><a href="#" class="icon fa-comment">16</a></li>
-									<li><a href="#" class="icon fa-heart">32</a></li>
-									<li><a href="#" class="icon brands fa-twitter">64</a></li>
-									<li><a href="#" class="icon brands fa-facebook-f">128</a></li>
-								</ul>
-							</div>
-							<a href="#" class="image featured"><img src="{% static 'core/'%}img/pic02.jpg" alt="Image of a cat" /></a>
 
-							<p>
-								Quisque vel sapien sit amet tellus elementum ultricies. Nunc vel orci turpis. Donec id malesuada metus.
-								Nunc nulla velit, fermentum quis interdum quis, tate etiam commodo lorem ipsum dolor sit amet dolore.
-								Quisque vel sapien sit amet tellus elementum ultricies. Nunc vel orci turpis. Donec id malesuada metus.
-								Nunc nulla velit, fermentum quis interdum quis, convallis eu sapien. Integer sed ipsum ante.
-							</p>
-						</article>
 
 					<!-- Pagination -->
 						<div class="pagination">
@@ -310,6 +297,27 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+			<script>
+				$(document).ready(function() {
+				  // Captura el evento de envío del formulario de búsqueda
+				  $('#form-busqueda').submit(function(event) {
+					event.preventDefault(); // Evita que se envíe el formulario
+			
+					// Obtiene el nombre ingresado por el usuario
+					var nombre = $('#nombre').val();
+			
+					// Oculta el formulario de búsqueda
+					$('#form-busqueda').hide();
+			
+					// Muestra el formulario de persona
+					$('#form-persona').show();
+			
+					// Puedes usar el nombre para realizar alguna acción en el formulario de persona
+					console.log('Nombre seleccionado:', nombre);
+				  });
+				});
+			  </script>
 	</body>
 </html>

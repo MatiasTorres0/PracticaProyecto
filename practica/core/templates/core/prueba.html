@@ -21,7 +21,83 @@
 
     <div id="form-persona" style="display: none;">
       <h2>Formulario de Persona</h2>
-      <!-- Agrega aquí los campos del formulario de persona -->
+      <form action="procesar_formulario.php" method="POST">
+        <div class="form-group">
+          <label>Viudez menor de un año:</label>
+          <select class="form-control" name="viudez">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Vivir solo:</label>
+          <select class="form-control" name="vivir_solo">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Cambio de casa en el último año:</label>
+          <select class="form-control" name="cambio_casa">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>No estar satisfecho con su actual lugar de residencia:</label>
+          <select class="form-control" name="no_satisfecho_residencia">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Mala percepción de su salud, comparado con otras personas de la misma edad:</label>
+          <select class="form-control" name="percepcion_salud">
+            <option value="1">Muy mala salud</option>
+            <option value="2">Mala salud</option>
+            <option value="3">Normal</option>
+            <option value="4">Buena salud</option>
+            <option value="5">Muy buena salud</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Ingesta diaria de 5 o más fármacos:</label>
+          <select class="form-control" name="ingesta_farmacos">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Limitación para realizar sus actividades por problemas de salud:</label>
+          <select class="form-control" name="limitacion_actividades">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Problema(s) de salud que le impida salir de la casa:</label>
+          <textarea class="form-control" name="problemas_salud" rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Haber estado hospitalizado en el último año:</label>
+          <select class="form-control" name="hospitalizacion">
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <input type="hidden" name="timestamp" value="<?php echo date('Y-m-d H:i:s'); ?>">
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
     </div>
   </div>
 
