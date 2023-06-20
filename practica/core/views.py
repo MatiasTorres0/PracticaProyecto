@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from .forms import UsuarioForm, PacienteForm
+from .models import Paciente
 
 def home(request):
     return render(request, 'core/home.html')
 
 def formulario(request):
+    nombre_buscado = "John Doe"
+    personas_encontradas = Paciente.objects.filter(nombre=nombre_buscado)
     return render(request, 'core/formulario.html')
 
 def prueba(request):
