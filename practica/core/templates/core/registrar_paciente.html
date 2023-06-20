@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registrar Paciente</title>
+</head>
+<body>
+  <h1>Registrar Paciente</h1>
+
+  <form action="/registrar_paciente" method="POST">
+    @csrf
+
+    <input type="text" name="nombre" placeholder="Nombre">
+    <input type="text" name="apellido" placeholder="Apellido">
+    <input type="text" name="edad" placeholder="Edad">
+    <input type="submit" value="Registrar">
+  </form>
+</body>
+</html>

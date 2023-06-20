@@ -9,23 +9,27 @@ class Medico(models.Model):
 class Region(models.Model):
   idregion = models.IntegerField(primary_key=True)
   nombre = models.CharField(max_length=45)
-
+  def __str__(self):
+        return self.nombre
 class Provincia(models.Model):
   idprovincia = models.IntegerField(primary_key=True)
   nombre = models.CharField(max_length=45)
   region = models.ForeignKey(Region, on_delete=models.CASCADE)
-
+  def __str__(self):
+        return f"ID: {self.idprovincia} - Nombre: {self.nombre} - Región: {self.region.nombre}"
 class Comuna(models.Model):
   idcomuna = models.IntegerField(primary_key=True)
   nombre = models.CharField(max_length=45)
   provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
-
+  def __str__(self):
+        return f"ID Comuna: {self.idcomuna} - Nombre: {self.nombre} - Provincia: {self.provincia.nombre}"
 class Paciente(models.Model):
   idPaciente = models.IntegerField(primary_key=True)
   nombre = models.CharField(max_length=45)
   run = models.CharField(max_length=45)
   comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE)
-
+  def __str__(self):
+        return f"ID: {self.idPaciente} - Nombre: {self.nombre} - RUN: {self.run} - Comuna: {self.comuna.nombre}"
 class FamiliarPaciente(models.Model):
   idFamiliarPaciente = models.IntegerField(primary_key=True)
   nombre = models.CharField(max_length=45)
