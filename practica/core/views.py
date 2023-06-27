@@ -34,10 +34,14 @@ def formulario(request):
             nombre = formulario.cleaned_data['nombre']
             personas_encontradas = Paciente.objects.filter(nombre=nombre)
 
+            # Obtener todos los pacientes
+            pacientes = Paciente.objects.all()
+
             # Mostrar la lista de personas encontradas
             data = {
                 'form': formulario,
-                'personas': personas_encontradas
+                'personas': personas_encontradas,
+                'pacientes': pacientes
             }
             return render(request, 'core/formulario.html', data)
 
@@ -49,8 +53,17 @@ def formulario(request):
         nombre_buscado = "John Doe"
         personas_encontradas = Paciente.objects.filter(nombre=nombre_buscado)
 
-        # Return the template
-        return render(request, 'core/formulario.html')
+        # Obtener todos los pacientes
+        pacientes = Paciente.objects.all()
+
+        # Return the template with the form, the list of people found, and the list of patients
+        data = {
+            'form': formulario,
+            'personas': personas_encontradas,
+            'pacientes': pacientes
+        }
+        return render(request, 'core/formulario.html', data)
+
 
 
 def buscar(request):

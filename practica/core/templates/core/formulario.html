@@ -53,13 +53,12 @@
 			<!-- Post -->
 			<article class="box post post-excerpt">
 				<header>
-					<!--
-									Note: Titles and subtitles will wrap automatically when necessary, so don't worry
-									if they get too long. You can also remove the <p> entirely if you don't
-									need a subtitle.
-								-->
-					<h2><a href="#">Welcome to Striped</a></h2>
-					<p>A free, fully responsive HTML5 site template by HTML5 UP</p>
+					<h1>Lista de Pacientes</h1>
+					<ul>
+						{% for paciente in pacientes %}
+						<li>{{ paciente.nombre }}</li>
+						{% endfor %}
+					</ul>
 				</header>
 				<div class="info">
 					<!--
