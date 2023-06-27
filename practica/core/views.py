@@ -1,7 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, UsuarioForm, PacienteForm
 from .models import Paciente
 from django.contrib.auth.models import User
+from core.models import PreguntasInstrumento
+
 def home(request):
     return render(request, 'core/home.html')
 
@@ -19,7 +22,13 @@ def formulario(request):
         formulario = CustomUserCreationForm(request.POST)
         if formulario.is_valid():
             # Guardar los datos en la base de datos
-            formulario.save()
+            pregunta = PreguntasInstrumento(
+                idtipoinstrumento=formulario.cleaned_data['idtipoinstrumento'],
+                descripcion=formulario.cleaned_data['descripcion'],
+                TipoRespuesta_idTipoRespuesta=formulario.cleaned_data['TipoRespuesta_idTipoRespuesta'],
+                paciente=formulario.cleaned_data['paciente']
+            )
+            pregunta.save()
 
             # Buscar el nombre en la base de datos
             nombre = formulario.cleaned_data['nombre']
@@ -33,14 +42,20 @@ def formulario(request):
             return render(request, 'core/formulario.html', data)
 
     else:
+        # Create a new CustomUserCreationForm object
         formulario = CustomUserCreationForm()
 
-    data = {
-        'form': formulario
-    }
-    return render(request, 'core/formulario.html', data)
+        # Buscar el nombre en la base de datos
+        nombre_buscado = "John Doe"
+        personas_encontradas = Paciente.objects.filter(nombre=nombre_buscado)
+
+        # Return the template
+        return render(request, 'core/formulario.html')
 
 
+def buscar(request):
+	mensaje="Nombre paciente: %r" %request.GET["prd"]
+	return HttpResponse(mensaje)
 
 def prueba(request):
     if request.method == 'POST':
