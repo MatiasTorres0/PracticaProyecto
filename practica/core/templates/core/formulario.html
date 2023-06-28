@@ -55,9 +55,11 @@
 				<header>
 					<h1>Lista de Pacientes</h1>
 					<ul>
-						{% for paciente in pacientes %}
-						<li>{{ paciente.nombre }}</li>
-						{% endfor %}
+						<a href="">{% for paciente in pacientes %} 
+							<li>{{ paciente.nombre }}</li>
+									{% endfor %}
+						</a>
+						
 					</ul>
 				</header>
 				<div class="info">
@@ -83,12 +85,17 @@
 				</div>
 				<div class="container">
 					<h1>Formulario</h1>
+					<form id="form-seleccion">
+						<button type="button" class="btn btn-primary" id="btn-buscar">Buscar</button>
+						<button type="button" class="btn btn-secondary" id="btn-formulario">Formulario</button>
 
-					<form id="form-busqueda" class="form-inline">
+					</form>
+				
+
+					<form id="form-busqueda" class="form-inline" style="display: none;">
 						<div class="form-group">
 							<label for="nombre">Nombre:</label>
-							<input type="text" class="form-control" id="nombre" name="nombre"
-								placeholder="Ingrese un nombre">
+							<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese un nombre">
 						</div>
 						<button type="submit" class="btn btn-primary">Buscar</button>
 					</form>
@@ -545,6 +552,25 @@
 			});
 		});
 	</script>
+
+<script>
+	document.getElementById("btn-buscar").addEventListener("click", function() {
+	  document.getElementById("form-seleccion").style.display = "none";
+	  document.getElementById("form-busqueda").style.display = "block";
+	});
+  
+	document.getElementById("btn-formulario").addEventListener("click", function() {
+	  document.getElementById("form-seleccion").style.display = "none";
+	  document.getElementById("form-busqueda").style.display = "none";
+	});
+  </script>
+
+	
+	
+	
+	
+	
+	
 </body>
 
 </html>
