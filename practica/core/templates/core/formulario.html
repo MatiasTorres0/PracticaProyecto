@@ -55,10 +55,10 @@
 				<header>
 					<h1>Lista de Pacientes</h1>
 					<ul>
-						<a href="">{% for paciente in pacientes %} 
-							<li>{{ paciente.nombre }}</li>
+						{% for paciente in pacientes %} 
+							<li><a href="">{{ paciente.nombre }}</li></a>
 									{% endfor %}
-						</a>
+						
 						
 					</ul>
 				</header>
@@ -563,6 +563,14 @@
 	  document.getElementById("form-seleccion").style.display = "none";
 	  document.getElementById("form-busqueda").style.display = "none";
 	});
+
+	$('li a').click(function(e) {
+    e.preventDefault(); // Evita que el enlace recargue la página
+
+    $('#form-seleccion').hide();
+    $('#form-busqueda').hide();
+    $('#form-persona').show();
+  });
   </script>
 
 	

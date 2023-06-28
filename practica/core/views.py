@@ -8,67 +8,25 @@ from core.models import PreguntasInstrumento
 def home(request):
     return render(request, 'core/home.html')
 
-def view(request):
-    user = request.user
-    return render(request, 'index.html', {'user': user})
-
-#def formulario(request):
-    nombre_buscado = "John Doe"
-    personas_encontradas = Paciente.objects.filter(nombre=nombre_buscado)
-    return render(request, 'core/formulario.html')
+def buscar(request):
+    mensaje = "Nombre paciente: %r" % request.GET["prd"]
+    return HttpResponse(mensaje)
 
 def formulario(request):
     if request.method == 'POST':
         formulario = CustomUserCreationForm(request.POST)
         if formulario.is_valid():
             # Guardar los datos en la base de datos
-            pregunta = PreguntasInstrumento(
-                idtipoinstrumento=formulario.cleaned_data['idtipoinstrumento'],
-                descripcion=formulario.cleaned_data['descripcion'],
-                TipoRespuesta_idTipoRespuesta=formulario.cleaned_data['TipoRespuesta_idTipoRespuesta'],
-                paciente=formulario.cleaned_data['paciente']
-            )
-            pregunta.save()
+            formulario.save()
 
-            # Buscar el nombre en la base de datos
-            nombre = formulario.cleaned_data['nombre']
-            personas_encontradas = Paciente.objects.filter(nombre=nombre)
-
-            # Obtener todos los pacientes
-            pacientes = Paciente.objects.all()
-
-            # Mostrar la lista de personas encontradas
-            data = {
-                'form': formulario,
-                'personas': personas_encontradas,
-                'pacientes': pacientes
-            }
-            return render(request, 'core/formulario.html', data)
-
+            return redirect('home')  # Redirige a la página de inicio después de procesar el formulario
     else:
-        # Create a new CustomUserCreationForm object
         formulario = CustomUserCreationForm()
 
-        # Buscar el nombre en la base de datos
-        nombre_buscado = "John Doe"
-        personas_encontradas = Paciente.objects.filter(nombre=nombre_buscado)
-
-        # Obtener todos los pacientes
-        pacientes = Paciente.objects.all()
-
-        # Return the template with the form, the list of people found, and the list of patients
-        data = {
-            'form': formulario,
-            'personas': personas_encontradas,
-            'pacientes': pacientes
-        }
-        return render(request, 'core/formulario.html', data)
-
-
-
-def buscar(request):
-	mensaje="Nombre paciente: %r" %request.GET["prd"]
-	return HttpResponse(mensaje)
+    data = {
+        'form': formulario
+    }
+    return render(request, 'core/formulario.html', data)
 
 def prueba(request):
     if request.method == 'POST':
@@ -76,7 +34,7 @@ def prueba(request):
         if formulario.is_valid():
             # Guardar los datos en la base de datos
             formulario.save()
-            return redirect('core/home.html')  # Reemplaza 'nombre_de_la_vista' por el nombre de la vista a la que deseas redirigir después de guardar el formulario
+            return redirect('home')  # Redirige a la página de inicio después de guardar el formulario
     else:
         formulario = CustomUserCreationForm()
 
@@ -84,7 +42,6 @@ def prueba(request):
         'form': formulario
     }
     return render(request, 'core/prueba.html', data)
-
 
 def registrar_usuario(request):
     if request.method == 'POST':
