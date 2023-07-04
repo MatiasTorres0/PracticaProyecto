@@ -20,32 +20,32 @@
 <body class="is-preload">
 	<script>
 		var $ = jQuery;
-	  
+
 		function searchName() {
-		  var nombre = $('#nombre').val();
-		  $.ajax({
-			url: '/api/search/' + nombre,
-			type: 'GET',
-			success: function(data) {
-			  var listaPersonas = data;
-			  var html = '';
-			  for (var i = 0; i < listaPersonas.length; i++) {
-				var persona = listaPersonas[i];
-				html += '<li><a href="?nombre=' + persona.nombre + '">' + persona.nombre + '</a></li>';
-			  }
-			  $('#listadoPersonas').html(html);
-			},
-			error: function(xhr, status, error) {
-			  console.log('Error:', error);
-			}
-		  });
+			var nombre = $('#nombre').val();
+			$.ajax({
+				url: '/api/search/' + nombre,
+				type: 'GET',
+				success: function (data) {
+					var listaPersonas = data;
+					var html = '';
+					for (var i = 0; i < listaPersonas.length; i++) {
+						var persona = listaPersonas[i];
+						html += '<li><a href="?nombre=' + persona.nombre + '">' + persona.nombre + '</a></li>';
+					}
+					$('#listadoPersonas').html(html);
+				},
+				error: function (xhr, status, error) {
+					console.log('Error:', error);
+				}
+			});
 		}
-	  
-		$(document).ready(function() {
-		  $('#buscar').click(searchName);
+
+		$(document).ready(function () {
+			$('#buscar').click(searchName);
 		});
-	  </script> 
-	  
+	</script>
+
 	<!-- Content -->
 	<div id="content">
 		<div class="inner">
@@ -55,11 +55,11 @@
 				<header>
 					<h1>Lista de Pacientes</h1>
 					<ul>
-						{% for paciente in pacientes %} 
-							<li><a href="">{{ paciente.nombre }}</li></a>
-									{% endfor %}
-						
-						
+						{% for paciente in pacientes %}
+						<li><a href="">{{ paciente.nombre }}</li></a>
+						{% endfor %}
+
+
 					</ul>
 				</header>
 				<div class="info">
@@ -90,273 +90,301 @@
 						<button type="button" class="btn btn-secondary" id="btn-formulario">Formulario</button>
 
 					</form>
-				
+
 
 					<form id="form-busqueda" class="form-inline" style="display: none;">
 						<div class="form-group">
 							<label for="nombre">Nombre:</label>
-							<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese un nombre">
+							<input type="text" class="form-control" id="nombre" name="nombre"
+								placeholder="Ingrese un nombre">
 						</div>
 						<button type="submit" class="btn btn-primary">Buscar</button>
 					</form>
 
 					<div id="form-persona" style="display: none;">
 						<h2>Formulario de Persona</h2>
-						<form action="procesar_formulario.php" method="POST">
+						<form method="post" action="{% url 'procesar_formulario' %}">
 							<div id="main">
 								<section id="form">
-								  <h2>Preguntas generales</h2>
-								  <form method="post" action="procesar_encuesta.php">
-									<div class="fields">
-									  <div class="field">
-										<label for="pregunta1">1. Mayor de 80 años</label>
-										<select id="pregunta1" name="pregunta1" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta2">2. Viudez menor de año</label>
-										<select id="pregunta2" name="pregunta2" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta3">3. Vivir solo</label>
-										<select id="pregunta3" name="pregunta3" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta4">4. Cambio de casa en el último año</label>
-										<select id="pregunta4" name="pregunta4" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta5">5. No estar satisfecho con su actual lugar de residencia</label>
-										<select id="pregunta5" name="pregunta5" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="form-group">
-										<label>Mala percepción de su salud, comparado con otras personas de la misma edad:</label>
-										<select class="form-control" name="percepcion_salud">
-										  <option value="1">Muy mala salud</option>
-										  <option value="2">Mala salud</option>
-										  <option value="3">Normal</option>
-										  <option value="4">Buena salud</option>
-										  <option value="5">Muy buena salud</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta7">7. Ingesta diaria de 5 o más fármacos</label>
-										<select id="pregunta7" name="pregunta7" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta8">8. Limitación para realizar sus actividades por problemas de salud</label>
-										<select id="pregunta8" name="pregunta8" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta9">9. Problema (s) de salud que le impida salir de la casa</label>
-										<select id="pregunta9" name="pregunta9" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									  <div class="field">
-										<label for="pregunta10">10. Haber estado hospitalizado en el último año</label>
-										<select id="pregunta10" name="pregunta10" required>
-										  <option value="" selected disabled>Seleccione una opción</option>
-										  <option value="Sí">Sí</option>
-										  <option value="No">No</option>
-										</select>
-									  </div>
-									</div>
-						  
-									<ul class="actions special">
-									  <li><input type="button" value="Siguiente" onclick="mostrarPreguntasAdicionales()"></li>
-									</ul>
-						  
-									<div id="preguntasAdicionales" style="display: none;">
-									  <h2>Preguntas adicionales</h2>
-									  <div class="fields">
-										<div class="field">
-										  <label for="pregunta11">11. Haberse caído frecuentemente en el último año</label>
-										  <select id="pregunta11" name="pregunta11" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
+									<h2>Preguntas generales</h2>
+									<form method="post" action="procesar_encuesta">
+										<div class="fields">
+											<div class="field">
+												<label for="pregunta1">1. Mayor de 80 años</label>
+												<select id="pregunta1" name="pregunta1" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta2">2. Viudez menor de año</label>
+												<select id="pregunta2" name="pregunta2" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta3">3. Vivir solo</label>
+												<select id="pregunta3" name="pregunta3" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta4">4. Cambio de casa en el último año</label>
+												<select id="pregunta4" name="pregunta4" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta5">5. No estar satisfecho con su actual lugar de
+													residencia</label>
+												<select id="pregunta5" name="pregunta5" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Mala percepción de su salud, comparado con otras personas de la
+													misma edad:</label>
+												<select class="form-control" name="percepcion_salud">
+													<option value="1">Muy mala salud</option>
+													<option value="2">Mala salud</option>
+													<option value="3">Normal</option>
+													<option value="4">Buena salud</option>
+													<option value="5">Muy buena salud</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta7">7. Ingesta diaria de 5 o más fármacos</label>
+												<select id="pregunta7" name="pregunta7" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta8">8. Limitación para realizar sus actividades por
+													problemas de salud</label>
+												<select id="pregunta8" name="pregunta8" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta9">9. Problema (s) de salud que le impida salir de
+													la casa</label>
+												<select id="pregunta9" name="pregunta9" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
+											<div class="field">
+												<label for="pregunta10">10. Haber estado hospitalizado en el último
+													año</label>
+												<select id="pregunta10" name="pregunta10" required>
+													<option value="" selected disabled>Seleccione una opción</option>
+													<option value="Sí">Sí</option>
+													<option value="No">No</option>
+												</select>
+											</div>
 										</div>
-										<div class="field">
-										  <label for="pregunta12">12. Tener problemas graves de memoria</label>
-										  <select id="pregunta12" name="pregunta12" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
+
+										<ul class="actions special">
+											<li><input type="button" value="Siguiente"
+													onclick="mostrarPreguntasAdicionales()"></li>
+										</ul>
+
+										<div id="preguntasAdicionales" style="display: none;">
+											<h2>Preguntas adicionales</h2>
+											<div class="fields">
+												<div class="field">
+													<label for="pregunta11">11. Haberse caído frecuentemente en el
+														último año</label>
+													<select id="pregunta11" name="pregunta11" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta12">12. Tener problemas graves de
+														memoria</label>
+													<select id="pregunta12" name="pregunta12" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta13">13. Sentirse triste o deprimido casi
+														siempre</label>
+													<select id="pregunta13" name="pregunta13" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta14">14. No ver bien (a pesar de usar
+														lentes)</label>
+													<select id="pregunta14" name="pregunta14" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta15">15. No escuchar bien (a pesar de usar
+														audífono)</label>
+													<select id="pregunta15" name="pregunta15" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta16">16. Usar bastón, andador o silla de ruedas
+														habitualmente</label>
+													<select id="pregunta16" name="pregunta16" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta17">17. Necesitar ayuda de otras personas para
+														comer, levantarse, vestirse o ir al baño</label>
+													<select id="pregunta17" name="pregunta17" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta18">18. No poder quedarse solo en su
+														casa</label>
+													<select id="pregunta18" name="pregunta18" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta19">19. No contar con la ayuda de alguien
+														cercano en caso de necesidad (si se enfermara, por
+														ejemplo)</label>
+													<select id="pregunta19" name="pregunta19" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta20">20. Haber sufrido la muerte o una enfermedad
+														grave en un familiar cercano en el último año</label>
+													<select id="pregunta20" name="pregunta20" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+											</div>
+
+											<ul class="actions special">
+												<li><input type="button" value="Siguiente"
+														onclick="mostrarPreguntasRestantes()"></li>
+											</ul>
 										</div>
-										<div class="field">
-										  <label for="pregunta13">13. Sentirse triste o deprimido casi siempre</label>
-										  <select id="pregunta13" name="pregunta13" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
+
+										<div id="preguntasRestantes" style="display: none;">
+											<h2>Otras preguntas</h2>
+											<div class="fields">
+												<div class="field">
+													<label for="pregunta21">21. No comer al menos una comida caliente al
+														día</label>
+													<select id="pregunta21" name="pregunta21" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta22">22. Comer menos de tres comidas al
+														día</label>
+													<select id="pregunta22" name="pregunta22" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta23">23. Necesitar ayuda para contestar la
+														encuesta</label>
+													<select id="pregunta23" name="pregunta23" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta24">24. Baja de peso de más de tres kilos en 3
+														meses</label>
+													<select id="pregunta24" name="pregunta24" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+												<div class="field">
+													<label for="pregunta25">25. Sin control médico más de 6
+														meses</label>
+													<select id="pregunta25" name="pregunta25" required>
+														<option value="" selected disabled>Seleccione una opción
+														</option>
+														<option value="Sí">Sí</option>
+														<option value="No">No</option>
+													</select>
+												</div>
+											</div>
+
+											<ul class="actions special">
+												<li><input type="submit" value="Enviar"></li>
+											</ul>
 										</div>
-										<div class="field">
-										  <label for="pregunta14">14. No ver bien (a pesar de usar lentes)</label>
-										  <select id="pregunta14" name="pregunta14" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta15">15. No escuchar bien (a pesar de usar audífono)</label>
-										  <select id="pregunta15" name="pregunta15" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta16">16. Usar bastón, andador o silla de ruedas habitualmente</label>
-										  <select id="pregunta16" name="pregunta16" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta17">17. Necesitar ayuda de otras personas para comer, levantarse, vestirse o ir al baño</label>
-										  <select id="pregunta17" name="pregunta17" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta18">18. No poder quedarse solo en su casa</label>
-										  <select id="pregunta18" name="pregunta18" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta19">19. No contar con la ayuda de alguien cercano en caso de necesidad (si se enfermara, por ejemplo)</label>
-										  <select id="pregunta19" name="pregunta19" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta20">20. Haber sufrido la muerte o una enfermedad grave en un familiar cercano en el último año</label>
-										  <select id="pregunta20" name="pregunta20" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-									  </div>
-						  
-									  <ul class="actions special">
-										<li><input type="button" value="Siguiente" onclick="mostrarPreguntasRestantes()"></li>
-									  </ul>
-									</div>
-						  
-									<div id="preguntasRestantes" style="display: none;">
-									  <h2>Otras preguntas</h2>
-									  <div class="fields">
-										<div class="field">
-										  <label for="pregunta21">21. No comer al menos una comida caliente al día</label>
-										  <select id="pregunta21" name="pregunta21" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta22">22. Comer menos de tres comidas al día</label>
-										  <select id="pregunta22" name="pregunta22" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta23">23. Necesitar ayuda para contestar la encuesta</label>
-										  <select id="pregunta23" name="pregunta23" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta24">24. Baja de peso de más de tres kilos en 3 meses</label>
-										  <select id="pregunta24" name="pregunta24" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-										<div class="field">
-										  <label for="pregunta25">25. Sin control médico más de 6 meses</label>
-										  <select id="pregunta25" name="pregunta25" required>
-											<option value="" selected disabled>Seleccione una opción</option>
-											<option value="Sí">Sí</option>
-											<option value="No">No</option>
-										  </select>
-										</div>
-									  </div>
-						  
-									  <ul class="actions special">
-										<li><input type="submit" value="Enviar"></li>
-									  </ul>
-									</div>
-								  </form>
+									</form>
 								</section>
-							  </div>
 							</div>
+					</div>
 			</article>
 
 			<!-- Post -->
 
 
 			<!-- Pagination -->
-			<div class="pagination">
-				<!--<a href="#" class="button previous">Previous Page</a>-->
-				<div class="pages">
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<span>&hellip;</span>
-					<a href="#">20</a>
-				</div>
-				<a href="#" class="button next">Next Page</a>
-			</div>
+
 
 		</div>
 	</div>
@@ -496,13 +524,13 @@
 	<script src="assets/js/jquery.min.js"></script>
 	<script>
 		function mostrarPreguntasAdicionales() {
-		  document.getElementById("preguntasAdicionales").style.display = "block";
+			document.getElementById("preguntasAdicionales").style.display = "block";
 		}
-	
+
 		function mostrarPreguntasRestantes() {
-		  document.getElementById("preguntasRestantes").style.display = "block";
+			document.getElementById("preguntasRestantes").style.display = "block";
 		}
-	  </script>
+	</script>
 	<script src="assets/js/browser.min.js"></script>
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
@@ -512,20 +540,20 @@
 	<script>
 		$(document).ready(function () {
 			var nombre;
-	
+
 			// Captura el evento de envío del formulario de búsqueda
 			$('#form-busqueda').submit(function (event) {
 				event.preventDefault(); // Evita que se envíe el formulario
-	
+
 				// Obtiene el nombre ingresado por el usuario
 				nombre = $('#nombre').val();
-	
+
 				// Oculta el formulario de búsqueda
 				$('#form-busqueda').hide();
-	
+
 				// Muestra el formulario de persona
 				$('#form-persona').show();
-	
+
 				// Puedes usar el nombre para realizar alguna acción en el formulario de persona
 				console.log('Nombre seleccionado:', nombre);
 			});
@@ -553,33 +581,32 @@
 		});
 	</script>
 
-<script>
-	document.getElementById("btn-buscar").addEventListener("click", function() {
-	  document.getElementById("form-seleccion").style.display = "none";
-	  document.getElementById("form-busqueda").style.display = "block";
-	});
-  
-	document.getElementById("btn-formulario").addEventListener("click", function() {
-	  document.getElementById("form-seleccion").style.display = "none";
-	  document.getElementById("form-busqueda").style.display = "none";
-	});
+	<script>
+		document.getElementById("btn-buscar").addEventListener("click", function () {
+			document.getElementById("form-seleccion").style.display = "none";
+			document.getElementById("form-busqueda").style.display = "block";
+		});
 
-	$('li a').click(function(e) {
-    e.preventDefault(); // Evita que el enlace recargue la página
+		document.getElementById("btn-formulario").addEventListener("click", function () {
+			document.getElementById("form-seleccion").style.display = "none";
+			document.getElementById("form-busqueda").style.display = "none";
+		});
 
-    $('#form-seleccion').hide();
-    $('#form-busqueda').hide();
-    $('#form-persona').show();
-  });
-  </script>
+		$('li a').click(function (e) {
+			e.preventDefault(); // Evita que el enlace recargue la página
 
-	
-	
-	
-	
-	
-	
+			$('#form-seleccion').hide();
+			$('#form-busqueda').hide();
+			$('#form-persona').show();
+		});
+	</script>
+
+
+
+
+
+
+
 </body>
 
 </html>
-

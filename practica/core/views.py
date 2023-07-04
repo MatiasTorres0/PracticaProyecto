@@ -27,9 +27,22 @@ def formulario(request):
         pregunta.descripcion = formulario.cleaned_data['descripcion']
         # Guardar la instancia de PreguntasInstrumento en la base de datos
         pregunta.save()
+                    # Obtener todos los pacientes
+        pacientes = Paciente.objects.all()
+        nombre = "John Doe"
+        personas_encontradas = Paciente.objects.filter(nombre=nombre)
+            # Mostrar la lista de personas encontradas
+        data = {
+                'form': formulario,
+                'personas': personas_encontradas,
+                'pacientes': pacientes
+            }
         return redirect('home')
     
+    
     else:
+        # Obtener todos los pacientes
+        pacientes = Paciente.objects.all()
         data = {
             'form': formulario
         }
@@ -71,24 +84,23 @@ def registrar_paciente(request):
 
 
 def procesar_formulario(request):
-    form = CustomUserCreationForm(request.POST)
-    if form.is_valid():
-        # Crear una instancia de PreguntasInstrumento con los datos que quieras guardar
-        pregunta = PreguntasInstrumento(
-            idtipoinstrumento = 1, # Aquí puedes poner el valor que corresponda
-            TipoRespuesta_idTipoRespuesta = 1, # Aquí puedes poner el valor que corresponda
-            paciente = request.user # Aquí puedes poner el usuario que corresponda
-        )
-        # Asignar el valor del campo descripcion al atributo descripcion de la instancia de PreguntasInstrumento
-        pregunta.descripcion = form.cleaned_data['descripcion']
-        # Guardar la instancia de PreguntasInstrumento en la base de datos
-        pregunta.save()
-        # Procesar los datos del formulario
-        procesar_formulario(form.cleaned_data)
-        return redirect('home')
-    
+    if request.method == 'POST':
+        form = MiFormulario(request.POST)
+        if form.is_valid():
+            # Obtener el paciente actual
+            paciente = Paciente.objects.get(id=1)  # Supongamos que el paciente tiene el ID 1, debes ajustar esto según tu lógica de obtención del paciente
+
+            # Guardar los datos en la base de datos
+            pregunta_instrumento = PreguntasInstrumento(
+                idtipoinstrumento=form.cleaned_data['idtipoinstrumento'],
+                descripcion=form.cleaned_data['descripcion'],
+                TipoRespuesta_idTipoRespuesta=form.cleaned_data['TipoRespuesta_idTipoRespuesta'],
+                paciente=paciente
+            )
+            pregunta_instrumento.save()
+
+            return render(request, 'resultado.html')
     else:
-        context = {
-            'form': form
-        }
-        return render(request, 'core/formulario.html', context)
+        form = MiFormulario()
+
+    return render(request, 'formulario.html', {'form': form})
