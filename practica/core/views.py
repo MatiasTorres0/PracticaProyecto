@@ -51,16 +51,32 @@ def prueba(request):
     if request.method == 'POST':
         formulario = CustomUserCreationForm(request.POST)
         if formulario.is_valid():
-            # Guardar los datos en la base de datos
-            formulario.save()
-            return redirect('home')  # Redirige a la página de inicio después de guardar el formulario
+            # Crear una instancia de PreguntasInstrumento con los datos que quieras guardar
+            pregunta = PreguntasInstrumento(
+                idtipoinstrumento=1,  # Aquí puedes poner el valor que corresponda
+                TipoRespuesta_idTipoRespuesta=1,  # Aquí puedes poner el valor que corresponda
+                paciente=request.user  # Aquí puedes poner el usuario que corresponda
+            )
+            # Asignar el valor del campo descripcion al atributo descripcion de la instancia de PreguntasInstrumento
+            pregunta.descripcion = formulario.cleaned_data['descripcion']
+            # Guardar la instancia de PreguntasInstrumento en la base de datos
+            pregunta.save()
+            # Redireccionar a la página de inicio
+            return redirect('home')
     else:
         formulario = CustomUserCreationForm()
 
+    # Obtener todos los pacientes
+    pacientes = Paciente.objects.all()
+    nombre = "John Doe"
+    personas_encontradas = Paciente.objects.filter(nombre=nombre)
+    # Mostrar la lista de personas encontradas
     data = {
-        'form': formulario
+        'form': formulario,
+        'personas': personas_encontradas,
+        'pacientes': pacientes
     }
-    return render(request, 'core/prueba.html', data)
+    return render(request, 'core/formulario.html', data)
 
 def registrar_usuario(request):
     if request.method == 'POST':
