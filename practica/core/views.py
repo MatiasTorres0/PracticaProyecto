@@ -14,27 +14,34 @@ def buscar(request):
     mensaje = "Nombre paciente: %r" % request.GET["prd"]
     return HttpResponse(mensaje)
 
+from django.shortcuts import get_object_or_404
+
+from django.shortcuts import get_object_or_404
+from .models import Paciente
+
 def formulario(request):
-    formulario = CustomUserCreationForm(request.POST)
+    formulario = MiFormulario(request.POST)
+    pregunta = None
+
     if formulario.is_valid():
-        # Crear una instancia de PreguntasInstrumento con los datos que quieras guardar
-        pregunta = PreguntasInstrumento()
-        pregunta.idtipoinstrumento = 1
-        pregunta.TipoRespuesta_idTipoRespuesta = 1
-        pregunta.paciente = request.user
-        pregunta.descripcion = formulario.cleaned_data['descripcion']
-        # Guardar la instancia de PreguntasInstrumento en la base de datos
+        # Obtener el paciente asociado al usuario actual
+        paciente = get_object_or_404(Paciente, idPaciente=request.user.id)
+        
+        pregunta = PreguntasInstrumento(
+            idtipoinstrumento=1,
+            TipoRespuesta_idTipoRespuesta=1,
+            paciente=paciente,
+            descripcion=formulario.cleaned_data['descripcion']
+        )
         pregunta.save()
         return redirect('home')
     else:
-        # Obtener todos los pacientes
         pacientes = Paciente.objects.all()
-        # Crear el contexto con el formulario y los pacientes encontrados
         data = {
             'form': formulario,
-            'pacientes': pacientes
+            'pacientes': pacientes,
+            'pregunta': pregunta
         }
-        # Renderizar la página web con el contexto
         return render(request, 'core/formulario.html', data)
 
 
