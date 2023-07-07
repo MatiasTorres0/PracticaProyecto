@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm, UsuarioForm, PacienteForm
+from .forms import CustomUserCreationForm, MiFormulario, UsuarioForm, PacienteForm
 from .models import PreguntasInstrumento, Paciente
 from django.contrib.auth.models import User
 from core.models import PreguntasInstrumento
@@ -18,76 +18,58 @@ def formulario(request):
     formulario = CustomUserCreationForm(request.POST)
     if formulario.is_valid():
         # Crear una instancia de PreguntasInstrumento con los datos que quieras guardar
-        pregunta = PreguntasInstrumento(
-            idtipoinstrumento = 1, # Aquí puedes poner el valor que corresponda
-            TipoRespuesta_idTipoRespuesta = 1, # Aquí puedes poner el valor que corresponda
-            paciente = request.user # Aquí puedes poner el usuario que corresponda
-        )
-        # Asignar el valor del campo descripcion al atributo descripcion de la instancia de PreguntasInstrumento
+        pregunta = PreguntasInstrumento()
+        pregunta.idtipoinstrumento = 1
+        pregunta.TipoRespuesta_idTipoRespuesta = 1
+        pregunta.paciente = request.user
         pregunta.descripcion = formulario.cleaned_data['descripcion']
         # Guardar la instancia de PreguntasInstrumento en la base de datos
         pregunta.save()
-                    # Obtener todos los pacientes
-        pacientes = Paciente.objects.all()
-        nombre = "John Doe"
-        personas_encontradas = Paciente.objects.filter(nombre=nombre)
-            # Mostrar la lista de personas encontradas
-        data = {
-                'form': formulario,
-                'personas': personas_encontradas,
-                'pacientes': pacientes
-            }
         return redirect('home')
-    
-    
     else:
         # Obtener todos los pacientes
         pacientes = Paciente.objects.all()
+        # Crear el contexto con el formulario y los pacientes encontrados
         data = {
-            'form': formulario
+            'form': formulario,
+            'pacientes': pacientes
         }
+        # Renderizar la página web con el contexto
         return render(request, 'core/formulario.html', data)
+
+
+from django.shortcuts import get_object_or_404
+
+from django.shortcuts import get_object_or_404
+from .models import Paciente
+
 def prueba(request):
-    if request.method == 'POST':
-        formulario = CustomUserCreationForm(request.POST)
-        if formulario.is_valid():
-            # Crear una instancia de PreguntasInstrumento con los datos que quieras guardar
-            pregunta = PreguntasInstrumento(
-                idtipoinstrumento=1,  # Aquí puedes poner el valor que corresponda
-                TipoRespuesta_idTipoRespuesta=1,  # Aquí puedes poner el valor que corresponda
-                paciente=request.user  # Aquí puedes poner el usuario que corresponda
-            )
-            # Asignar el valor del campo descripcion al atributo descripcion de la instancia de PreguntasInstrumento
-            pregunta.descripcion = formulario.cleaned_data['descripcion']
-            # Guardar la instancia de PreguntasInstrumento en la base de datos
-            pregunta.save()
-            # Redireccionar a la página de inicio
-            return redirect('home')
+    formulario = MiFormulario(request.POST)
+    pregunta = None
+
+    if formulario.is_valid():
+        # Obtener el paciente asociado al usuario actual
+        paciente = get_object_or_404(Paciente, idPaciente=request.user.id)
+        
+        pregunta = PreguntasInstrumento(
+            idtipoinstrumento=1,
+            TipoRespuesta_idTipoRespuesta=1,
+            paciente=paciente,
+            descripcion=formulario.cleaned_data['descripcion']
+        )
+        pregunta.save()
+        return redirect('home')
     else:
-        formulario = CustomUserCreationForm()
+        pacientes = Paciente.objects.all()
+        data = {
+            'form': formulario,
+            'pacientes': pacientes,
+            'pregunta': pregunta
+        }
+        return render(request, 'core/prueba.html', data)
 
-    # Obtener todos los pacientes
-    pacientes = Paciente.objects.all()
-    nombre = "John Doe"
-    personas_encontradas = Paciente.objects.filter(nombre=nombre)
-    # Mostrar la lista de personas encontradas
-    data = {
-        'form': formulario,
-        'personas': personas_encontradas,
-        'pacientes': pacientes
-    }
-    return render(request, 'core/formulario.html', data)
 
-def registrar_usuario(request):
-    if request.method == 'POST':
-        formulario = UsuarioForm(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            return redirect('home')
-    else:
-        formulario = UsuarioForm()
-    return render(request, 'usuarios/registrar_usuario.html', {'formulario': formulario})
-
+    
 def registrar_paciente(request):
     if request.method == 'POST':
         formulario = PacienteForm(request.POST)

@@ -52,15 +52,37 @@
 
 			<!-- Post -->
 			<article class="box post post-excerpt">
+				<h1>Lista de pacientes</h1>
 				<header>
-					<h1>Lista de Pacientes</h1>
-					<ul>
-						{% for paciente in pacientes %}
-						<li><a href="">{{ paciente.nombre }}</a></li>
-						{% endfor %}
-					</ul>
+					<label for="paciente">Selecciona un paciente:</label>
+					<select name="paciente" id="paciente">
+					{% for paciente in pacientes %}
+					<option value="{{ paciente.idPaciente }}">{{ paciente.nombre }} - {{ paciente.run }}</option>
+					{% endfor %}
+					</select>
+
+						
 				</header>
-				<form action="" method="post">{% csrf_token %}</form>
+				<form id="form-seleccion">
+					<button type="button" class="btn btn-primary" id="btn-buscar">Buscar</button>
+					<button type="button" class="btn btn-secondary" id="btn-formulario">Formulario</button>
+
+				</form>	
+	
+
+
+				{% if pregunta %}
+				<p>La pregunta que has creado es:</p>
+				<p>{{ pregunta.descripcion }}</p>
+			{% else %}
+				<p>No se ha creado ninguna pregunta.</p>
+			{% endif %}
+		
+			<form action="{% url 'prueba' %}" method="post">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" value="Enviar">
+			</form>
 				<div class="info">
 					<!--
 						Note: The date should be formatted exactly as it's shown below. In particular, the

@@ -53,14 +53,14 @@
 			<!-- Post -->
 			<article class="box post post-excerpt">
 				<header>
-					<h1>Lista de Pacientes</h1>
-					<ul>
-						{% for paciente in pacientes %}
-						<li><a href="">{{ paciente.nombre }}</li></a>
-						{% endfor %}
-
-
-					</ul>
+					<label for="paciente">Selecciona un paciente:</label>
+					<select name="paciente" id="paciente">
+					{% for paciente in pacientes %}
+					<option value="{{ paciente.idPaciente }}">{{ paciente.nombre }} - {{ paciente.run }}</option>
+					{% endfor %}
+					</select>
+					<button id="form-busqueda" type="submit" class="btn btn-primary">Buscar</button>
+						
 				</header>
 				<div class="info">
 					<!--
@@ -92,14 +92,7 @@
 					</form>
 
 
-					<form id="form-busqueda" class="form-inline" style="display: none;">
-						<div class="form-group">
-							<label for="nombre">Nombre:</label>
-							<input type="text" class="form-control" id="nombre" name="nombre"
-								placeholder="Ingrese un nombre">
-						</div>
-						<button type="submit" class="btn btn-primary">Buscar</button>
-					</form>
+
 
 					<div id="form-persona" style="display: none;">
 						<h2>Formulario de Persona</h2>
@@ -402,7 +395,7 @@
 				<li><a href="{%url 'formulario' %}">Formulario</a></li>
 				<li><a href="{%url 'prueba' %}">Pagina de prueba</a></li>
 				<li><a href="{%url 'registrar_paciente' %}">Contact Me</a></li>
-				<li><a href="{%url 'registrar_usuario' %}">Contact Me</a></li>
+
 			</ul>
 		</nav>
 
