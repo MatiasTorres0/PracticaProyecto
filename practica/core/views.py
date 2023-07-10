@@ -14,10 +14,11 @@ def buscar(request):
     mensaje = "Nombre paciente: %r" % request.GET["prd"]
     return HttpResponse(mensaje)
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import MiFormulario
+from .models import PreguntasInstrumento, Paciente
+from django.contrib import messages
 
-from django.shortcuts import get_object_or_404
-from .models import Paciente
 
 def formulario(request):
     formulario = MiFormulario(request.POST)
@@ -27,14 +28,19 @@ def formulario(request):
         # Obtener el paciente asociado al usuario actual
         paciente = get_object_or_404(Paciente, idPaciente=request.user.id)
         
-        pregunta = PreguntasInstrumento(
-            idtipoinstrumento=1,
-            TipoRespuesta_idTipoRespuesta=1,
-            paciente=paciente,
-            descripcion=formulario.cleaned_data['descripcion']
-        )
-        pregunta.save()
-        return redirect('home')
+        pregunta = PreguntasInstrumento()
+        pregunta.idtipoinstrumento = 1
+        pregunta.TipoRespuesta_idTipoRespuesta = 1
+        pregunta.paciente = paciente
+        descripcion = request.POST.get('descripcion')
+        if descripcion: # verificar que el campo descripcion tenga un valor
+            pregunta.descripcion = descripcion
+            pregunta.save()
+            return redirect('home')
+        else:
+            # mostrar un mensaje de error o hacer otra cosa
+            messages.error(request, 'El campo descripcion es obligatorio')
+            return render(request, 'core/formulario.html', {'form': formulario})
     else:
         pacientes = Paciente.objects.all()
         data = {
@@ -43,6 +49,7 @@ def formulario(request):
             'pregunta': pregunta
         }
         return render(request, 'core/formulario.html', data)
+
 
 
 from django.shortcuts import get_object_or_404

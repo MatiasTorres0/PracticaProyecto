@@ -52,32 +52,33 @@
 
 			<!-- Post -->
 			<article class="box post post-excerpt">
-				<header>
-					<label for="paciente">Selecciona un paciente:</label>
-					<select name="paciente" id="paciente">
-					{% for paciente in pacientes %}
-					<option value="{{ paciente.idPaciente }}">{{ paciente.nombre }} - {{ paciente.run }}</option>
-					{% endfor %}
-					</select>
-					<button id="form-busqueda" type="submit" class="btn btn-primary">Buscar</button>
+<article class="box post post-excerpt">
+	<header>
+		<label for="paciente">Selecciona un paciente:</label>
+		<select name="paciente" id="paciente">
+			{% for paciente in pacientes %}
+				<option value="{{ paciente.idPaciente }}">{{ paciente.nombre }} - {{ paciente.run }}</option>
+			{% endfor %}
+		</select>
+		<button id="form-busqueda" type="submit" class="btn btn-primary">Buscar</button>
+	</header>
+	
+	<!-- Resto del contenido del artículo -->
 
+	<form action="{% url 'formulario' %}" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Enviar">
+	</form>
+	
+	<!-- Resto del contenido del artículo -->
+</article>
 
 
 			
 		
 		
-						{% if pregunta %}
-						<p>La pregunta que has creado es:</p>
-						<p>{{ pregunta.descripcion }}</p>
-					{% else %}
-						<p>No se ha creado ninguna pregunta.</p>
-					{% endif %}
-				
-					<form action="{% url 'prueba' %}" method="post">
-						{% csrf_token %}
-						{{ form.as_p }}
-						<input type="submit" value="Enviar">
-					</form>
+
 				<div class="info">
 					<!--
 									Note: The date should be formatted exactly as it's shown below. In particular, the
