@@ -14,6 +14,11 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{% load static %}
+	
+
+	<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+
 	<link rel="stylesheet" href="{% static 'core/'%}/css/main.css" />
 </head>
 
@@ -52,32 +57,43 @@
 
 			<!-- Post -->
 			<article class="box post post-excerpt">
-<article class="box post post-excerpt">
-	<header>
-		<label for="paciente">Selecciona un paciente:</label>
-		<select name="paciente" id="paciente">
-			{% for paciente in pacientes %}
-				<option value="{{ paciente.idPaciente }}">{{ paciente.nombre }} - {{ paciente.run }}</option>
-			{% endfor %}
-		</select>
-		<button id="form-busqueda" type="submit" class="btn btn-primary">Buscar</button>
-	</header>
-	
-	<!-- Resto del contenido del artículo -->
+				<article class="box post post-excerpt">
+					<header>
+						<label for="paciente">Selecciona un paciente:</label>
+						<select name="paciente" id="paciente">
+							{% for paciente in pacientes %}
+							<option value="{{ paciente.idPaciente }}">{{ paciente.nombre }} - {{ paciente.run }}
+							</option>
+							{% endfor %}
+						</select>
+						<button id="form-busqueda" type="submit" class="btn btn-primary">Buscar</button>
+					</header>
 
-	<form action="{% url 'formulario' %}" method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Enviar">
-	</form>
-	
-	<!-- Resto del contenido del artículo -->
-</article>
+					<!-- Resto del contenido del artículo -->
+
+					<form action="{% url 'formulario' %}" method="post">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<button id="submit">Enviar</button>
+						<script>
+							var submit = document.getElementById("submit");
+							if (submit) { // verificar que el elemento no sea nulo
+								submit.addEventListener("click", function () {
+									// hacer algo cuando se hace click en el botón
+								});
+							}
+						</script>
 
 
-			
-		
-		
+					</form>
+
+					<!-- Resto del contenido del artículo -->
+				</article>
+
+
+
+
+
 
 				<div class="info">
 					<!--

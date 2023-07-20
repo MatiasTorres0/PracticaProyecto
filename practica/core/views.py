@@ -36,6 +36,9 @@ def formulario(request):
         if descripcion: # verificar que el campo descripcion tenga un valor
             pregunta.descripcion = descripcion
             pregunta.save()
+            # agregar esta línea para mostrar un mensaje de éxito
+            messages.success(request, 'La pregunta se guardó correctamente', extra_tags='persistent')
+
             return redirect('home')
         else:
             # mostrar un mensaje de error o hacer otra cosa
@@ -49,7 +52,6 @@ def formulario(request):
             'pregunta': pregunta
         }
         return render(request, 'core/formulario.html', data)
-
 
 
 from django.shortcuts import get_object_or_404
